@@ -1,0 +1,21 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [ master, gh-action-spike-with-docker ]
+  pull_request:
+    branches: [ master, gh-action-spike-with-docker ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare containers
+      run: docker-compose up --build
+    - name: Prepare DB
+      run: docker-compose run -e RAILS_ENV=test web rails db:create
+    - name: Run tests
+      run: docker-compose run web rails test
+
