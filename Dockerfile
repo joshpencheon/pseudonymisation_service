@@ -6,7 +6,7 @@ WORKDIR /app
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
-RUN bundle install
+RUN bundle install --local
 COPY . .
 
 # Some hacky bootstrapping:
