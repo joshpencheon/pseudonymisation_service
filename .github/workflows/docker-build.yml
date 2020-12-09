@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Prepare containers
-      run: docker-compose up --build
+      run: docker-compose up --build -d
     - name: Prepare DB
       run: docker-compose run -e RAILS_ENV=test web rails db:create
     - name: Run tests
