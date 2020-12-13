@@ -1,8 +1,6 @@
-FROM ruby:2.7.0 as base
+FROM ruby:2.7.0
 
 RUN apt-get update -qq && apt-get install -y postgresql-client cmake
-
-FROM base as build
 
 WORKDIR /app
 
@@ -14,13 +12,6 @@ RUN bundle install --local
 RUN rm -rf vendor/cache
 
 COPY . .
-
-FROM base as packaged
-
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /app /app
-
-WORKDIR /app
 
 # Some hacky bootstrapping:
 RUN echo "*** Using application test configuration for image build ***"
