@@ -2,9 +2,8 @@ name: Docker Build
 
 on:
   push:
-    branches: [ gh-action-spike-with-docker ]
   pull_request:
-    branches: [ gh-action-spike-with-docker ]
+    branches: [ master ]
 
 jobs:
   build_and_test:
