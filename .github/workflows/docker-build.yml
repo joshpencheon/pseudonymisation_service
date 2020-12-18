@@ -35,5 +35,5 @@ jobs:
     - name: Build image
       run: docker build . --tag $IMAGE:latest --tag $IMAGE:$GITHUB_SHA --cache-from $IMAGE:latest
     - name: Push image
-      run: docker push $IMAGE:$GITHUB_SHA
+      run: docker push --all-tags $IMAGE
 
