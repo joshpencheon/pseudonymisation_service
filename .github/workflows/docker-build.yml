@@ -22,19 +22,11 @@ jobs:
     - name: Setup testing network
       run: docker network create --driver bridge pseudo-net
     - name: Start Database
-      run: docker run -d --name postgres --network pseudo-net \
-        -e POSTGRES_PASSWORD \
-        postgres
+      run: docker run -d --name postgres --network pseudo-net -e POSTGRES_PASSWORD postgres
       env:
         POSTGRES_PASSWORD: password
     - name: Start App
-      run: docker run -d --name pseudo-app --network pseudo-net \
-        -e DATABASE_HOST \
-        -e DATABASE_USERNAME \
-        -e DATABASE_PASSWORD \
-        -e RAILS_ENV \
-        -e RAILS_LOG_TO_STDOUT \
-        $IMAGE:$GITHUB_SHA
+      run: docker run -d --name pseudo-app --network pseudo-net -e DATABASE_HOST -e DATABASE_USERNAME -e DATABASE_PASSWORD -e RAILS_ENV -e RAILS_LOG_TO_STDOUT $IMAGE:$GITHUB_SHA
       env:
         DATABASE_HOST: db
         DATABASE_USERNAME: postgres
@@ -42,8 +34,7 @@ jobs:
         RAILS_ENV: production
         RAILS_LOG_TO_STDOUT: enabled
     - name: Prepare DB
-      run: docker exec -it -e RAILS_ENV \
-        pseudo-app rails db:create
+      run: docker exec -it -e RAILS_ENV pseudo-app rails db:create
       env:
         RAILS_ENV: test
     - name: Run tests
