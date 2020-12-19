@@ -13,7 +13,11 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   web:
-    build: .
+    build:
+      context: .
+      cache_from:
+        - ghcr.io/joshpencheon/pseudonymisation_service:latest
+    image: ghcr.io/joshpencheon/pseudonymisation_service:latest
     environment:
       RAILS_ENV: production
       RAILS_LOG_TO_STDOUT: enabled

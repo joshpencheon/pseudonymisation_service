@@ -9,10 +9,14 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+
     steps:
     - uses: actions/checkout@v2
     - name: Prepare containers
-      run: docker-compose up --build -d
+      run: docker-compose up -d --build --build-arg BUILDKIT_INLINE_CACHE=1
     - name: Prepare DB
       run: docker-compose run -e RAILS_ENV=test web rails db:create
     - name: Run tests
@@ -27,6 +31,8 @@ jobs:
 
     env:
       IMAGE: ghcr.io/joshpencheon/pseudonymisation_service
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
 
     steps:
     - name: Log in to GitHub Container Registry
