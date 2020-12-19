@@ -9,17 +9,16 @@ COPY Gemfile.lock Gemfile.lock
 COPY vendor/cache vendor/cache
 
 RUN bundle install --local
-RUN rm -rf vendor/cache
 
 COPY . .
 
 # Some hacky bootstrapping:
-RUN echo "*** Using application test configuration for image build ***"
-RUN rm config/puma.rb
-RUN mv config/database.yml.sample config/database.yml
-RUN cp config/userlist_test.yml config/userlist.yml
-RUN cp config/credentials/test.key config/credentials/production.key
-RUN cp config/credentials/test.yml.enc config/credentials/production.yml.enc
+RUN echo "*** Using application test configuration for image build ***" \
+ && rm config/puma.rb \
+ && mv config/database.yml.sample config/database.yml \
+ && cp config/userlist_test.yml config/userlist.yml \
+ && cp config/credentials/test.key config/credentials/production.key \
+ && cp config/credentials/test.yml.enc config/credentials/production.yml.enc
 
 EXPOSE 3000
 
