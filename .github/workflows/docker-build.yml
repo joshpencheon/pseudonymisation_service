@@ -16,7 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Prepare containers
-      run: docker-compose up -d --build --build-arg BUILDKIT_INLINE_CACHE=1
+      run: docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
+    - name: Start containers in the background
+      run: docker-compose up -d
     - name: Prepare DB
       run: docker-compose run -e RAILS_ENV=test web rails db:create
     - name: Run tests
