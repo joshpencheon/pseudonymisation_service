@@ -22,3 +22,7 @@ The application is currently exposed via a `NodePort` Service; if using minikube
 curl -sH "Authorization: Bearer test_user:..." http://192.168.64.2:32353/api/v1/keys
 ```
 
+## TODO
+
+- use TF workspaces
+- validate image label using docker provider?
