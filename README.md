@@ -46,4 +46,4 @@ curl -sH "Authorization: Bearer test_user:..." http://192.168.64.2:32353/api/v1/
 
 ## TODO
 
-- validate image label using docker provider?
+- [] validate image label using docker provider?
