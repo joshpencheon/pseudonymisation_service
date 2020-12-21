@@ -1,4 +1,7 @@
 variable "release_tag" {
   type    = string
-  # default = "latest"
+}
+
+variable "label" {
+  type    = string
 }

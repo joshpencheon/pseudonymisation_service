@@ -1,6 +1,6 @@
 resource "kubernetes_namespace" "pseudonymisation_service" {
   metadata {
-    name = "pseudonymisation-service-${substr(var.release_tag, 0, 12)}"
+    name = "pseudonymisation-service-${var.label}"
   }
 }
 

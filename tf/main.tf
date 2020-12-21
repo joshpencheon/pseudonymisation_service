@@ -3,13 +3,33 @@ terraform {
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
+
+    github = {
+      source = "hashicorp/github"
+    }
   }
 }
 
 provider "kubernetes" {}
 
+provider "github" {
+  owner = "joshpencheon"
+  # token = "..." <- required, but can be read from $GITHUB_TOKEN
+}
+
+locals {
+  branch      = terraform.workspace
+  release_tag = data.github_branch.current.sha
+}
+
+data "github_branch" "current" {
+  repository = "pseudonymisation_service"
+  branch     = local.branch
+}
+
 module "pseudo_service" {
   source = "./modules/pseudo-service"
 
-  release_tag = var.release_tag
+  label       = local.branch
+  release_tag = local.release_tag
 }

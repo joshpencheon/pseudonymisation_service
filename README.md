@@ -8,12 +8,34 @@ Currently, investigating cacheable container-based CI workflow, using GitHub Act
 
 ## Deployment via Terraform
 
-It's possible to deploy to a Kuberenetes cluster, using Terraform.
+It's possible to deploy to a Kuberenetes cluster, using Terraform. Workspaces are use to track a per-branch state.
+
+Setup:
 
 ```bash
 cd tf
 terraform init
-terraform apply # [-var 'release_tag=COMMIT_SHA']
+```
+
+Deploying `master`:
+
+```bash
+terraform workspace new master
+terraform apply
+```
+
+Then deploying a new `feature-branch`:
+
+```bash
+terraform workspace new feature-branch
+terraform apply
+```
+
+The re-deploying some updates to `master`:
+
+```bash
+terraform workspace select master
+terraform apply
 ```
 
 The application is currently exposed via a `NodePort` Service; if using minikube, `minikube service list` would give a host IP.
@@ -24,5 +46,4 @@ curl -sH "Authorization: Bearer test_user:..." http://192.168.64.2:32353/api/v1/
 
 ## TODO
 
-- use TF workspaces
 - validate image label using docker provider?
