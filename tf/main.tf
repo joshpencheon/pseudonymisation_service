@@ -19,7 +19,7 @@ provider "github" {
 
 locals {
   branch      = terraform.workspace
-  release_tag = data.github_branch.current.sha
+  release_tag = coalesce(var.release_tag, data.github_branch.current.sha)
 }
 
 data "github_branch" "current" {
