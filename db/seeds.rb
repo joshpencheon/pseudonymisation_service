@@ -8,25 +8,25 @@
 
 ## Users ##
 
-test_user = User.create!(username: 'test_user')
+test_user = User.find_or_create_by!(username: 'test_user')
 
 ## PseudonymistionKeys ##
 
-primary_one = PseudonymisationKey.create!(name: 'Primary Key One')
-primary_two = PseudonymisationKey.create!(name: 'Primary Key Two')
+primary_one = PseudonymisationKey.find_or_create_by!(name: 'Primary Key One')
+primary_two = PseudonymisationKey.find_or_create_by!(name: 'Primary Key Two')
 
-repseudo_one = PseudonymisationKey.create!(name: 'RePseudo Key One', parent_key: primary_one)
-repseudo_two = PseudonymisationKey.create!(name: 'RePseudo Key Two', parent_key: primary_two)
-_repseudo_three = PseudonymisationKey.create!(name: 'RePseudo Key Three', parent_key: repseudo_two)
+repseudo_one = PseudonymisationKey.find_or_create_by!(name: 'RePseudo Key One', parent_key: primary_one)
+repseudo_two = PseudonymisationKey.find_or_create_by!(name: 'RePseudo Key Two', parent_key: primary_two)
+_repseudo_three = PseudonymisationKey.find_or_create_by!(name: 'RePseudo Key Three', parent_key: repseudo_two)
 
-_compound_one = PseudonymisationKey.create!(
+_compound_one = PseudonymisationKey.find_or_create_by!(
   key_type: 'compound',
   name: 'Compound Key One',
   start_key: primary_one,
   end_key: repseudo_one
 )
 
-compound_two = PseudonymisationKey.create!(
+compound_two = PseudonymisationKey.find_or_create_by!(
   key_type: 'compound',
   name: 'Direct access to RePseudo One',
   start_key: repseudo_one,
@@ -35,5 +35,5 @@ compound_two = PseudonymisationKey.create!(
 
 ## KeyGrants ##
 
-_grant_one = KeyGrant.create!(user: test_user, pseudonymisation_key: primary_one)
-_grant_two = KeyGrant.create!(user: test_user, pseudonymisation_key: compound_two)
+_grant_one = KeyGrant.find_or_create_by!(user: test_user, pseudonymisation_key: primary_one)
+_grant_two = KeyGrant.find_or_create_by!(user: test_user, pseudonymisation_key: compound_two)
