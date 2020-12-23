@@ -180,3 +180,25 @@ resource "kubernetes_service" "webapp" {
     type = "NodePort"
   }
 }
+
+resource "kubernetes_ingress" "webapp" {
+  metadata {
+    name = "webapp"
+    namespace = kubernetes_namespace.pseudonymisation_service.id
+  }
+
+  spec {
+    rule {
+      host = "${var.label}.pseudonymise.test"
+      http {
+        path {
+          path = "/"
+          backend {
+            service_name = kubernetes_service.webapp.metadata[0].name
+            service_port = kubernetes_service.webapp.spec[0].port[0].port
+          }
+        }
+      }
+    }
+  }
+}
