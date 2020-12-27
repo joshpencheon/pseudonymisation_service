@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     post '/pseudonymise', to: 'pseudonymisation#pseudonymise'
   end
 
+  get '/health', to: 'health_check#health'
+
   root 'application#info'
 end
