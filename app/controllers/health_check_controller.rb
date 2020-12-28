@@ -1,5 +1,7 @@
 # Provides a healthcheck endpoint
 class HealthCheckController < ApplicationController
+  skip_before_action :authenticate, :log_user
+
   def health
     if db_ready?
       head :ok

@@ -9,6 +9,12 @@ class HealthCheckControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
   end
 
+  test 'without client session' do
+    sign_out
+    get '/health'
+    assert_response :ok
+  end
+
   test 'with DB connectivity issue' do
     ApplicationRecord.stubs(:connection).raises(ActiveRecord::ActiveRecordError)
     get '/health'
