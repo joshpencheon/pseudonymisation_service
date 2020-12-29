@@ -9,3 +9,7 @@ Currently, investigating cacheable container-based CI workflow, using GitHub Act
 ## Deployment via Terraform
 
 See the [standalone repository](https://github.com/joshpencheon/pseudonymisation_service_infrastructure) for more details.
+
+## TODO
+
+-[ ] Parallel testing on GitHub Actions
