@@ -25,6 +25,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    needs:
+    - build
+
     env:
       CI_NODE_TOTAL: 4
 
@@ -59,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs:
-    - build
+    - test
 
     if: github.ref == 'refs/heads/master'
 
