@@ -51,12 +51,13 @@ jobs:
         RAILS_ENV: production
         RAILS_LOG_TO_STDOUT: enabled
     - name: Prepare DB
-      run: docker exec -e RAILS_ENV -e CI_NODE_INDEX -e CI_NODE_TOTAL pseudo-app rails db:create
+      run: docker exec -e RAILS_ENV pseudo-app rails db:create
       env:
         RAILS_ENV: test
-        CI_NODE_INDEX: ${{ matrix.ci_node_index }}
     - name: Run tests
-      run: docker exec pseudo-app rails test
+      run: docker exec -e CI_NODE_INDEX -e CI_NODE_TOTAL pseudo-app rails test
+      env:
+        CI_NODE_INDEX: ${{ matrix.ci_node_index }}
 
   push:
     runs-on: ubuntu-latest
