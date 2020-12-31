@@ -3,7 +3,41 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'mocha/minitest'
 
+# knapsack_adapter = Knapsack::Adapters::MinitestAdapter.bind
+# knapsack_adapter.set_test_helper_path(__FILE__)
+
+module ShardedRunning
+  def run
+    if run_shard?
+      super
+    else
+      Minitest::Result.from(self)
+    end
+  end
+
+  private
+
+  def run_shard?
+    parallel_test_nodes == 1 ||
+    parallel_shard_integer % parallel_test_nodes == parallel_test_node
+  end
+
+  def parallel_test_node
+    ENV.fetch('CI_NODE_INDEX', 0).to_i
+  end
+
+  def parallel_test_nodes
+    ENV.fetch('CI_NODE_TOTAL', 1).to_i
+  end
+
+  def parallel_shard_integer
+    Digest::MD5.hexdigest(self.name).to_i(16)
+  end
+end
+
 class ActiveSupport::TestCase
+  prepend ShardedRunning
+
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
 
