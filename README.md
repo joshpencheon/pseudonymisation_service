@@ -12,4 +12,4 @@ See the [standalone repository](https://github.com/joshpencheon/pseudonymisation
 
 ## TODO
 
--[ ] Parallel testing on GitHub Actions
+- [x] Parallel testing on GitHub Actions
